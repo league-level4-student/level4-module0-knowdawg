@@ -1,16 +1,32 @@
 package _01_Crazy_Digital_Painting;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Random;
 
-public class CrazyDigitalPainting {
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+public class CrazyDigitalPainting implements ActionListener{
 	//1. Create two final static integers for the width and height of the display.
-
+	final static int width = 1000;
+	final static int hieght = 800;
+	int add = 0;
+	ColorArrayDisplayer co = new ColorArrayDisplayer();
+	Random random = new Random();
+	Timer timer = new Timer(1500, this);
 	
 	//2. Create a 2D array of Color objects. You will need to import
 	//java.awt.Color. Initialize the size of the array using the 
 	//integers created in step 1.
 	
-	
+	Color[][] colors = new Color [width][hieght];
 	
 	public CrazyDigitalPainting() {
+
 		//3. Open the crazy_digital_painting.png file and look at the image.
 		
 		//4. Iterate through the 2D array and initialize each Color object
@@ -19,12 +35,32 @@ public class CrazyDigitalPainting {
 		//   colors[i][j] = new Color(i % 256, (i * j) % 256, j % 256);
 		
 		//5. Come up with your own pattern to make a cool crazy image.
-		
+		for (int i = 0; i < colors.length; i++) {
+			for (int j = 0; j < colors[i].length; j++) {
+				colors[i][j] = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+			}
+		}
 		//6. Use the ColorArrayDisplayer class to call the displayColorsAsImage method 
 		//   to show off your picture.
+		co.displayColorsAsImage(colors);
+		timer.start();
 	}
 	
 	public static void main(String[] args) {
 		new CrazyDigitalPainting();
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		co.displayColorsAsImage(colors);
+		for (int i = 0; i < colors.length; i++) {
+			for (int j = 0; j < colors[i].length; j++) {
+				colors[i][j] = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+			}
+		}
+		//6. Use the ColorArrayDisplayer class to call the displayColorsAsImage method 
+		//   to show off your picture.
+		
+	}
+
 }
