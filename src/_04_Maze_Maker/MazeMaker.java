@@ -22,10 +22,10 @@ public class MazeMaker{
 		maze = new Maze(width, height);
 		
 		//4. select a random cell to start
-		
+		Cell startCell = maze.getCell(randGen.nextInt(width), randGen.nextInt(height));
 		
 		//5. call selectNextPath method with the randomly selected cell
-		
+		selectNextPath(startCell);
 		
 		return maze;
 	}
@@ -33,34 +33,55 @@ public class MazeMaker{
 	//6. Complete the selectNextPathMethod
 	private static void selectNextPath(Cell currentCell) {
 		//A. mark cell as visited
-
+		currentCell.setBeenVisited(true);
 		//B. Get an ArrayList of unvisited neighbors using the current cell and the method below
+		ArrayList<Cell> unCells = new ArrayList<Cell>();
 		
+		Cell yAdd = maze.cells[currentCell.getX()][currentCell.getY() + 1];
+		Cell ySub = maze.cells[currentCell.getX()][currentCell.getY() - 1];
+		Cell xAdd = maze.cells[currentCell.getX() + 1][currentCell.getY()];
+		Cell xSub = maze.cells[currentCell.getX() - 1][currentCell.getY()];
+		
+		if (currentCell.getY() < height && yAdd.hasBeenVisited() == false) {
+			unCells.add(yAdd);
+		}
+		if (currentCell.getY() > 0 && ySub.hasBeenVisited() == false) {
+			unCells.add(ySub);
+		}
+		if (currentCell.getX() < height && xAdd.hasBeenVisited() == false) {
+			unCells.add(xAdd);
+		}
+		if (currentCell.getX() > 0 && xSub.hasBeenVisited() == false) {
+			unCells.add(xSub);
+		}
 		//C. if has unvisited neighbors,
-		
+		if (unCells.size() > 0) {
+			
 			//C1. select one at random.
-			
+			Cell newCell = unCells.get(randGen.nextInt(unCells.size()));
 			//C2. push it to the stack
-		
+			uncheckedCells.push(newCell);
 			//C3. remove the wall between the two cells
-
+			removeWalls(currentCell, newCell);
 			//C4. make the new cell the current cell and mark it as visited
-		
+			currentCell = newCell;
 			//C5. call the selectNextPath method with the current cell
-			
+			selectNextPath(newCell);
+		} else {
 			
 		//D. if all neighbors are visited
 		
 			//D1. if the stack is not empty
-			
-				// D1a. pop a cell from the stack
-		
-				// D1b. make that the current cell
-		
-				// D1c. call the selectNextPath method with the current cell
+			if (!uncheckedCells.isEmpty()) {
 				
-			
-		
+				// D1a. pop a cell from the stack
+				
+				// D1b. make that the current cell
+				currentCell = uncheckedCells.pop();
+				// D1c. call the selectNextPath method with the current cell
+				selectNextPath(currentCell);
+			}
+		}
 	}
 
 	//7. Complete the remove walls method.
