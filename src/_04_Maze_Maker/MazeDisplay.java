@@ -10,6 +10,7 @@ public class MazeDisplay extends JPanel{
 	
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 800;
+	public static int blocks = 40;
 	
 	private JFrame window;
 	
@@ -26,7 +27,7 @@ public class MazeDisplay extends JPanel{
 		window.setVisible(true);
 		window.pack();
 		
-		maze = MazeMaker.generateMaze(5, 5);
+		maze = MazeMaker.generateMaze(blocks, blocks);
 		repaint();
 	}
 	

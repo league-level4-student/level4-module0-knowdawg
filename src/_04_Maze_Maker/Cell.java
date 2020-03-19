@@ -9,7 +9,7 @@ public class Cell {
 	private int x;
 	private int y;
 	
-	private int size = 100;
+	private int size = 50;
 	
 	private boolean visited;
 	
@@ -23,6 +23,7 @@ public class Cell {
 		this.y = y;
 		
 		visited = false;
+		size = MazeDisplay.WIDTH / MazeDisplay.blocks;
 		
 		northWall = true;
 		southWall = true;
